@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#define OUT
 #include "TankPlayerController.h"
+#include "Engine/World.h"
 
 
 void ATankPlayerController::BeginPlay()
@@ -10,7 +11,6 @@ void ATankPlayerController::BeginPlay()
 
     ATank* PossessedTank = nullptr;
     PossessedTank  = GetControlledTank();
-
     if(PossessedTank == nullptr)
     {
         UE_LOG(LogTemp,Error,TEXT("PlayerController not possessing a tank"));
@@ -40,7 +40,20 @@ void ATankPlayerController::AimTowardsCrossHair()
     {
         return;
     }
+
+    FVector OUT HitLocation;
+
+    if(GetSightRayHitLocation (OUT HitLocation))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"),*HitLocation.ToString())
+    } 
     // Get World Location if linetrace through crosshair
     // If it hits the landscape 
         // Tell controlled tank to aim at this point
+}
+
+bool ATankPlayerController::GetSightRayHitLocation (FVector& HitLocation)const
+{
+    HitLocation = FVector(1.0f);
+    return true;
 }
