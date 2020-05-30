@@ -1,10 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #define OUT
+
 #include "TankPlayerController.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+
 
 
 void ATankPlayerController::BeginPlay()
