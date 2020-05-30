@@ -6,7 +6,7 @@
 #include "Camera/PlayerCameraManager.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
-
+#include "Tank.h"
 
 
 void ATankPlayerController::BeginPlay()
