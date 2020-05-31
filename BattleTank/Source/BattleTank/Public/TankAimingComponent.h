@@ -8,6 +8,7 @@
 
 // forward decleration
 class UTankBarrel;
+class UTankTurret;
 
 // the comment below is shown in Blueprint :)
 
@@ -22,13 +23,14 @@ public:
 	UTankAimingComponent();
 
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	
+	void SetTurretReference(UTankTurret* TurretToSet);
 	// TODO: SetTurretReference
 	
 	void AimAt(FVector HitLocation, float LaunchSpeed);	
 
 private:
 	UTankBarrel* Barrel = nullptr;
+	UTankTurret* Turret = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection);
 };
