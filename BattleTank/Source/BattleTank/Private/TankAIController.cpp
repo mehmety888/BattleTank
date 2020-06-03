@@ -26,6 +26,7 @@ void ATankAIController::Tick(float DeltaTime)
     }
 
     // TODO: Move towards the player
+    MoveToActor(PlayerTank, AcceptanceRadius);
 
     // Aim towards the player
     FVector PlayerLocation = PlayerTank->GetActorLocation();
