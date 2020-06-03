@@ -3,6 +3,7 @@
 
 #include "TankMovementComponent.h"
 #include "TankTrack.h"
+#include "Math/Vector.h"
 
 void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
 {
@@ -39,4 +40,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
     float ForwardThrow = FVector::DotProduct(TankForward, AIForwardIntention);
     IntendMoveForward(ForwardThrow);
+
+    float RightThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
+    IntendTurnRight(RightThrow);
 }
