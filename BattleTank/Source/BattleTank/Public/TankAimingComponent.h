@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright EmbraceID Limited
 
 #pragma once
 
@@ -31,16 +31,16 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	void SetTurretReference(UTankTurret* TurretToSet);
-	// TODO: SetTurretReference
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 	
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	void AimAt(FVector HitLocation, float LaunchSpeed);	
 
 protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringStatus FiringStatus = EFiringStatus::Reloaded;
+	EFiringStatus FiringStatus = EFiringStatus::Aiming;
 
 private:
 

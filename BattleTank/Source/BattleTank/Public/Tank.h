@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright EmbraceID Limited
 
 #pragma once
 
@@ -23,21 +23,11 @@ public:
 
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
-
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+
 	UPROPERTY(BlueprintReadOnly)	
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
@@ -46,17 +36,16 @@ protected:
 
 private:
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float LaunchSpeed = 4000.f; // 1000 m/s TODO: find a sensible default
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 4000.f;
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.f;
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf <AProjectile> ProjectileBlueprint;
 	// UClass* ProjectileBlueprint; // A pointer to any UClass 
 
-	// Local Barrel referance for spawning projectile
 	UTankBarrel* Barrel = nullptr;
 
 	double LastFireTime = 0;
