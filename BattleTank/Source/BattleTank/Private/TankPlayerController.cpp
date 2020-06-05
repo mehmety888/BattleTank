@@ -6,6 +6,7 @@
 #include "Camera/PlayerCameraManager.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+#include "TankAimingComponent.h"
 #include "Tank.h"
 
 
@@ -13,16 +14,11 @@ void ATankPlayerController::BeginPlay()
 {
     Super::BeginPlay();
 
-    ATank* PossessedTank = nullptr;
-    PossessedTank  = GetControlledTank();
-    if(PossessedTank == nullptr)
+    auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+    if(AimingComponent)
     {
-        UE_LOG(LogTemp,Error,TEXT("PlayerController not possessing a tank"));
+        FoundAimingComponent(AimingComponent);
     }
-    else 
-    {
-        UE_LOG(LogTemp,Warning,TEXT("PlayerController possessing %s"),*PossessedTank->GetName());
-    }    
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -30,8 +26,6 @@ void ATankPlayerController::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
     AimTowardsCrossHair();
 }
-
-
 
 ATank* ATankPlayerController::GetControlledTank() const
 {
