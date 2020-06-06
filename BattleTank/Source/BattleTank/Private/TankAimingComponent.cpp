@@ -22,7 +22,7 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 }
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	if(!Barrel)
+	if(!ensure(Barrel))
 	{
 		return;
 	}
@@ -55,7 +55,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	if(!Barrel || !Turret)
+	if(!ensure(Barrel && Turret)) 
 	{
 		return;
 	}

@@ -13,13 +13,13 @@ void ATankAIController::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 
     ATank* PossessedTank = Cast<ATank>(GetPawn());
-    if(!PossessedTank)
+    if(!ensure(PossessedTank))
     {
         return;
     }
 
     ATank* PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-    if(!PlayerTank)
+    if(!ensure(PlayerTank))
     {
         UE_LOG(LogTemp,Error,TEXT("Cannot find Player Controller"));
         return;
