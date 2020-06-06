@@ -7,34 +7,30 @@
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
 #include "TankAimingComponent.h"
-#include "Tank.h"
 
 
 void ATankPlayerController::BeginPlay()
 {
     Super::BeginPlay();
 
-    auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
-    if(AimingComponent)
+    auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+    if(!ensure(AimingComponent))
     {
-        FoundAimingComponent(AimingComponent);
+        return;
     }
-}
+    FoundAimingComponent(AimingComponent);
 
+}
 void ATankPlayerController::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
     AimTowardsCrossHair();
 }
 
-ATank* ATankPlayerController::GetControlledTank() const
-{
-    return Cast<ATank>(GetPawn());
-}
-
 void ATankPlayerController::AimTowardsCrossHair()
 {
-    if(!ensure(GetControlledTank()))
+    auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+    if(!ensure(AimingComponent))
     {
         return;
     }
@@ -43,11 +39,8 @@ void ATankPlayerController::AimTowardsCrossHair()
 
     if(GetSightRayHitLocation (OUT HitLocation))
     {
-        GetControlledTank()->AimAt(HitLocation);
+        AimingComponent->AimAt(HitLocation);
     } 
-    // Get World Location if linetrace through crosshair
-    // If it hits the landscape 
-        // Tell controlled tank to aim at this point
 }
 
 bool ATankPlayerController::GetSightRayHitLocation (FVector& HitLocation)const
