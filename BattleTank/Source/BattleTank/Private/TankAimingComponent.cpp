@@ -27,6 +27,11 @@ EFiringStatus UTankAimingComponent::GetFiringState () const
 	return FiringStatus;
 }
 
+int UTankAimingComponent::GetRoundsLeft() const
+{
+	return RoundsLeft;
+}
+
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
     Barrel = BarrelToSet;
@@ -36,7 +41,11 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime,TickType,ThisTickFunction);
-	if((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+	if (RoundsLeft <= 0)
+	{
+		FiringStatus = EFiringStatus::OutOfAmmo;
+	}
+	else if((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
 		FiringStatus = EFiringStatus::Reloaded;
 	}
@@ -117,7 +126,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 void UTankAimingComponent::Fire()
 {
-	if(FiringStatus != EFiringStatus::Reloaded)
+	if(FiringStatus == EFiringStatus::Aiming || FiringStatus == EFiringStatus::Locked)
 	{
 		// Spawn a projectile at the socket location of the barrel 
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
@@ -128,6 +137,7 @@ void UTankAimingComponent::Fire()
 
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+		RoundsLeft --;
 	}
 }
 
