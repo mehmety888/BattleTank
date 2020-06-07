@@ -21,11 +21,18 @@ void UTankAimingComponent::BeginPlay()
 	// so that first fire after initial reload
 	LastFireTime = FPlatformTime::Seconds();
 }
+
+EFiringStatus UTankAimingComponent::GetFiringState () const
+{
+	return FiringStatus;
+}
+
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
     Barrel = BarrelToSet;
     Turret = TurretToSet;
 }
+
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime,TickType,ThisTickFunction);
@@ -42,6 +49,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 		FiringStatus = EFiringStatus::Locked;
 	}
 }
+
 bool UTankAimingComponent::IsBarrelMoving()
 {	
 	if(!ensure(Barrel))
@@ -122,3 +130,4 @@ void UTankAimingComponent::Fire()
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
+
