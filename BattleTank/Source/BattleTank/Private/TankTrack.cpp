@@ -36,7 +36,7 @@ void UTankTrack::ApplySidewaysForce()
 
     // Calculate and apply sideways force (F = ma)
     auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent()); // mass property is inside static mesh component tank
-    auto CorrectionForce = TankRoot->GetMass() * CorrectionAcceleration / 2; // because there are two tracks
+    auto CorrectionForce = (TankRoot->GetMass() * CorrectionAcceleration) / 20; // because there are two tracks
 
     TankRoot->AddForce(CorrectionForce);
 }
