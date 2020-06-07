@@ -18,7 +18,6 @@ public:
 	UTankTrack();
 
 	virtual void BeginPlay() override;
-	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent *HitComponent, 
@@ -26,9 +25,15 @@ public:
            	   UPrimitiveComponent* OtherComponent, 
                FVector NormalImpulse, 
                const FHitResult &Hit);
+
+	void ApplySidewaysForce();
 			   
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
+
+	void DriveTrack();
+
+	float CurrentThrottle = 0.f;
 
 	// Max force per track in Newtons
 	UPROPERTY(EditDefaultsOnly)
