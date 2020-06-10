@@ -30,10 +30,19 @@ private:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 	// Start the tank moving barrel so that a shot would hit where the crosshair intersects the world
 	void AimTowardsCrossHair ();
 
 	bool GetSightRayHitLocation (FVector& HitLocation)const;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
+
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& OUT HitLocation)const;
 
 	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5f;
@@ -43,8 +52,4 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000.f;
-
-	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
-
-	bool GetLookVectorHitLocation(FVector LookDirection, FVector& OUT HitLocation)const;
 };
