@@ -24,6 +24,10 @@ private:
 
 	virtual void BeginPlay() override;
 
+	virtual void SetPawn(APawn* InPawn) override;
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 };
