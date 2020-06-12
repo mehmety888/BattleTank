@@ -39,7 +39,7 @@ void ATankAIController::Tick(float DeltaTime)
     auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
     auto ControlledTank = GetPawn();
 
-    if(!ensure(PlayerTank && ControlledTank))
+    if(!(PlayerTank && ControlledTank))
     {
         return;
     }
